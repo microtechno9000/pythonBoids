@@ -49,30 +49,6 @@ def draw_flock_instanced(flock):
     shape_list.remove(shape)
 
 def get_triangle_points(boid, height = 50, half_width = 4):
-    # Create x,y points for triangle, based on current boid x,y
-    x1 = boid.x - boid.width
-    y1 = boid.y
-    x2 = boid.x + boid.width
-    y2 = boid.y
-
-    # Transpose - using trig, a is y, b is x
-    if boid.vel_x == 0:
-        boid.theta = atan(boid.vel_y)
-    else:
-        boid.theta = atan(boid.vel_y / boid.vel_x)
-    # Calculate the heading and adjust for x3
-    a = abs(round(boid.height * sin(boid.theta)))
-    b = abs(round(boid.height * cos(boid.theta)))
-    # print(f"2 a:{a} b:{b}")
-    if boid.vel_x < 0:
-        x3 = boid.x - b
-    else:
-        x3 = boid.x + b
-    if boid.vel_y < 0:
-        y3 = boid.y - a
-    else:
-        y3 = boid.y + a
-
     velocity_vector = np.array([boid.vel_x, boid.vel_y])
     position_vector = np.array([boid.x, boid.y])
     velocity_vector_normalised = normalize(velocity_vector)
@@ -93,7 +69,6 @@ def get_triangle_points(boid, height = 50, half_width = 4):
     P2 = triangle_middle_base + N1
     P3 = triangle_middle_base + N2
 
-    #return (x1, y1, x2, y2, x3, y3)
     return (boid.x, boid.y, P2[0], P2[1], P3[0], P3[1])
 
 def draw(boid) -> None:
